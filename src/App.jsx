@@ -2,10 +2,31 @@
 import { useState } from 'react';
 import './App.scss'
 
-const actions = ['C', '+-', '%', '/', 7, 8, 9, 'X', 4, 5 ,6, '-', 1, 2, 3, '+', 0, '.', '='];
+const actions = [
+  'C',
+  '+-',
+  '%',
+  '/',
+  7,
+  8,
+  9,
+  'X',
+  4,
+  5,
+  6,
+  '-',
+  1,
+  2,
+  3,
+  '+',
+  0,
+  '.',
+  '=',
+];
 
-function App() {
+export function App() {
   const [value, setValue] = useState ('0');
+  const [operator, setOperator] = useState ('');
 
   const handleClick = (actionClicked) => { 
     if (actionClicked === '.' && !value.includes('.')) {
@@ -13,7 +34,46 @@ function App() {
       return;
     }
 
-    if (typeof actionClicked !== 'number') { //si no es un número se para la ejecución
+    if (actionClicked === 'C') {
+      setValue('0');
+      return;
+    }
+
+    if (actionClicked === '+-') {
+      setValue((value * -1).toString());
+      return;
+    }
+
+    if (actionClicked === '%') {
+      setValue((value / 100).toString());
+      return;
+    }
+
+    if (actionClicked === '-' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
+      setValue((value + actionClicked));
+      return;
+    }
+
+    if (actionClicked === '+' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
+      setValue((value + actionClicked));
+      return;
+    }
+
+    if (actionClicked === 'X' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
+      setValue((value + actionClicked));
+      return;
+    }
+
+    if (actionClicked === '/' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
+      setValue((value + actionClicked));
+      return;
+    }
+
+    if (actionClicked === '=' && !value.includes('=')) {
+    }
+
+
+    if (typeof actionClicked !== 'number') {
     return;
     }
 
@@ -30,14 +90,13 @@ function App() {
         <div className="calculator__result">{value}</div>
         <div className="calculator__actions">
         {actions.map((action) => (
-          <button key={action} onClick={() => handleClick} className="calculator__action">
+          <button 
+          key={action} onClick={() => handleClick(action)} className="calculator__action">
             {action}
           </button>
         ))}
         </div>
       </div>
     </>
-  )
+  );
 }
-
-export default App
