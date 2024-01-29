@@ -26,7 +26,6 @@ const actions = [
 
 export function App() {
   const [value, setValue] = useState ('0');
-  const [operator, setOperator] = useState ('');
 
   const handleClick = (actionClicked) => { 
     if (actionClicked === '.' && !value.includes('.')) {
@@ -68,10 +67,6 @@ export function App() {
       setValue((value + actionClicked));
       return;
     }
-
-    if (actionClicked === '=' && !value.includes('=')) {
-    }
-
 
     if (typeof actionClicked !== 'number') {
     return;
