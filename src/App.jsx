@@ -26,6 +26,7 @@ const actions = [
 
 export function App() {
   const [value, setValue] = useState ('0');
+  const [operation, setOperation] = useState ();
 
   const handleClick = (actionClicked) => { 
     if (actionClicked === '.' && !value.includes('.')) {
@@ -48,27 +49,48 @@ export function App() {
       return;
     }
 
-    if (actionClicked === '-' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
-      setValue((value + actionClicked));
-      return;
-    }
+    if (actionClicked === '=') {
+      if (typeof operation === 'undefined') {
+        return;
+      }
 
-    if (actionClicked === '+' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
-      setValue((value + actionClicked));
-      return;
-    }
+      const numbers = value.split(operation);
+      const num1 = numbers[0];
+      const num2 = numbers[1] === '' ? num1 : numbers[1];
 
-    if (actionClicked === 'X' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
-      setValue((value + actionClicked));
-      return;
-    }
+      if (operation === 'X') {
+        setValue(num1 * num2);
+        return;
+      }
 
-    if (actionClicked === '/' && !value.includes('X') && !value.includes('-') && !value.includes('+') && !value.includes('/')) {
-      setValue((value + actionClicked));
+      if (operation === '+') {
+        setValue(num1 + num2);
+        return;
+      }
+
+      if (operation === '-') {
+        setValue(num1 - num2);
+        return;
+      }
+
+      if (operation === '/') {
+        setValue(num1 / num2);
+        return;
+      }
+
       return;
     }
 
     if (typeof actionClicked !== 'number') {
+      const lastChar = value.slice(-1);
+      setOperation(actionClicked);
+
+      if (lastChar === operation) {
+        const newValue = value.replace(lastChar, actionClicked);
+        setValue(newValue);
+        return;
+      } 
+      setValue(value + actionClicked);
     return;
     }
 
