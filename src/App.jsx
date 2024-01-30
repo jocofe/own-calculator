@@ -59,22 +59,26 @@ export function App() {
       const num2 = numbers[1] === '' ? num1 : numbers[1];
 
       if (operation === 'X') {
-        setValue(num1 * num2);
+        setValue((Number(num1) * Number(num2)).toString());
+        console.log(typeof value)
         return;
       }
 
       if (operation === '+') {
-        setValue(num1 + num2);
+        setValue((Number(num1) + Number(num2)).toString());
+        console.log(typeof value)
         return;
       }
 
       if (operation === '-') {
-        setValue(num1 - num2);
+        setValue((Number(num1) - Number(num2)).toString());
+        console.log(typeof value)
         return;
       }
 
       if (operation === '/') {
-        setValue(num1 / num2);
+        setValue((Number(num1) / Number(num2)).toString());
+        console.log(typeof value)
         return;
       }
 
