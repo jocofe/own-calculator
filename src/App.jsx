@@ -28,9 +28,35 @@ export function App() {
   const [value, setValue] = useState ('0');
   const [operation, setOperation] = useState ();
 
+  const calculate = () => {
+    const numbers = value.split(operation);
+      const num1 = Number(numbers[0]);
+      const num2 = !numbers[1] ? num1 : Number(numbers[1]); //Una cadena de texto vacía es un valor falso y undefined también
+      let result; 
+
+      switch(operation) {
+        case 'X':
+          result = num1 * num2;
+          break;
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        default:
+          result = num1 / num2;
+          break;
+      }
+    
+      setValue(result.toString());
+  };
+
   const handleClick = (actionClicked) => { 
-    if (actionClicked === '.' && !value.includes('.')) {
-      setValue(value + actionClicked);
+    if (actionClicked === '.') {
+      if (value.includes === '=') {
+        setValue(value + actionClicked);
+      }
       return;
     }
 
@@ -50,38 +76,12 @@ export function App() {
     }
 
     if (actionClicked === '=') {
-      if (typeof operation === 'undefined') {
+      if (typeof operation === 'undefined' || operation === '=') {
         return;
       }
-
-      const numbers = value.split(operation);
-      const num1 = numbers[0];
-      const num2 = numbers[1] === '' ? num1 : numbers[1];
-
-      if (operation === 'X') {
-        setValue((Number(num1) * Number(num2)).toString());
-        console.log(typeof value)
-        return;
-      }
-
-      if (operation === '+') {
-        setValue((Number(num1) + Number(num2)).toString());
-        console.log(typeof value)
-        return;
-      }
-
-      if (operation === '-') {
-        setValue((Number(num1) - Number(num2)).toString());
-        console.log(typeof value)
-        return;
-      }
-
-      if (operation === '/') {
-        setValue((Number(num1) / Number(num2)).toString());
-        console.log(typeof value)
-        return;
-      }
-
+      
+      setOperation('=');
+      calculate();
       return;
     }
 
@@ -97,6 +97,8 @@ export function App() {
       setValue(value + actionClicked);
     return;
     }
+
+    
 
     if (value === '0') {
     setValue(actionClicked.toString());
